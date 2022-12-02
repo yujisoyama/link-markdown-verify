@@ -1,0 +1,24 @@
+{
+  "name": "link-markdown-verify",
+  "version": "1.0.0",
+  "description": "Library to verify broken links in markdown files. Developed with Alura course NodeJS: Criando a sua primeira biblioteca.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yujisoyama/link-markdown-verify.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yujisoyama/link-markdown-verify/issues"
+  },
+  "homepage": "https://github.com/yujisoyama/link-markdown-verify#readme",
+  "dependencies": {
+    "chalk": "^5.1.2"
+  }
+}
