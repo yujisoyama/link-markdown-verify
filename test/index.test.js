@@ -14,4 +14,8 @@ describe('pegaArquivo::', () => {
     it('deve retornar array com resultados', async () => {
         expect(await pegaArquivo('./test/arquivos/texto1.md')).toEqual(arrayResult);
     })
+
+    it('deve retornar mensagem "não há links"', async () => {
+        expect(await pegaArquivo('./test/arquivos/texto1_semlinks.md')).toBe('não há links');
+    })
 })
