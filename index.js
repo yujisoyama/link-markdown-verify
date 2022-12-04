@@ -1,37 +1,28 @@
-import chalk from 'chalk';
-import fs from 'fs';
-import path from 'path';
+const chalk = require('chalk');
+const fs = require('fs');
 
-const treatError = (error) => {
-    throw new Error(chalk.red(error.code, 'File not found'));
+function extraiLinks(texto) {
+  const regex = /\[([^\]]*)\]\((https?:\/\/[^$#\s].[^\s]*)\)/gm;
+  const arrayResultados = [];
+  let temp;
+  while((temp = regex.exec(texto)) !== null) {
+    arrayResultados.push({ [temp[1]]: temp[2] })
+  }
+  return arrayResultados.length === 0 ? 'não há links' : arrayResultados;
 }
 
-export const takeFile = async (filePath) => {
-    try {
-        const absoluteDir = path.join(path.resolve(), '.', filePath);
-        const encoding = 'utf-8';
-        const files = await fs.promises.readdir(absoluteDir, { encoding });
-        const result = await Promise.all(files.map(async (file) => {
-            const fileDir = `${absoluteDir}/${file}`;
-            const text = await fs.promises.readFile(fileDir, encoding);
-            return extractLinks(text);
-        }));
-        return result;
-    } catch (error) {
-        treatError(error);
-    }
+function trataErro(erro) {
+  throw new Error(chalk.red(erro.code, 'não há arquivo no caminho'));
 }
 
-const extractLinks = (text) => {
-    const regex = /\[([^\]]*)\]\((https?:\/\/[^$#\s].[^\s]*)\)/gm;
-    const links = [];
-    let temp;
-
-    while ((temp = regex.exec(text)) !== null) {
-        links.push({ [temp[1]]: temp[2] });
-    }
-    return links.length === 0 ? 'No link was found.' : links;
+async function pegaArquivo(caminhoDoArquivo) {
+  const encoding = 'utf-8';
+  try {
+    const texto = await fs.promises.readFile(caminhoDoArquivo, encoding)
+    return extraiLinks(texto);
+  } catch(erro) {
+    trataErro(erro);
+  }
 }
 
-
-// takeFile('./arquivos/texto1.md');
+module.exports = pegaArquivo;

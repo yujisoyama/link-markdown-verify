@@ -1,14 +1,16 @@
-import chalk from 'chalk';
-import { takeFile } from "./index.js";
-import { validURLs } from './http-validate.js';
+const chalk = require('chalk');
+const pegaArquivo = require('./index');
+const validaURLs = require('./http-validacao');
 
-const path = process.argv;
+const caminho = process.argv;
 
-async function textProcess(path) {
-    const result = await takeFile(path[2]);
-    if (path[3] === 'validate') {
-        console.log('Validate Links:', validURLs(result));
-    }
+async function processaTexto(caminhoDeArquivo) {
+  const resultado = await pegaArquivo(caminhoDeArquivo[2]);
+  if (caminho[3] === 'validar') {
+    console.log(chalk.yellow('links validados'), await validaURLs(resultado));
+  } else {
+    console.log(chalk.yellow('lista de links'), resultado);
+  }
 }
 
-textProcess(path)
+processaTexto(caminho);
